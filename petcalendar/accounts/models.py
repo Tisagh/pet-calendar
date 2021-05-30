@@ -28,7 +28,7 @@ class MyUserManager(BaseUserManager):
       first_name=first_name,
       last_name=last_name,
     )
-    user.is_staff = True
+    
     user.is_admin = True
     user.save(using=self._db)
     return user
@@ -36,15 +36,13 @@ class MyUserManager(BaseUserManager):
 
 # models
 class User(AbstractBaseUser):
-  email = models.EmailField(blank=False, null=False)
+  email = models.EmailField(blank=False, null=False, unique=True)
   first_name = models.CharField(max_length=100)
   last_name = models.CharField(max_length=100)
   date_of_birth = models.DateField(verbose_name="DOB", blank=True, null=True)
   phone = models.CharField(max_length=11, blank=True, null=True)
   is_active = models.BooleanField(default=True)
-  is_staff = models.BooleanField(default=False)
   is_admin = models.BooleanField(default=False)
-
 
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -52,6 +50,9 @@ class User(AbstractBaseUser):
 
   objects = MyUserManager()
 
+  def __str__(self):
+    return self.email
+    
   def get_full_name(self):
     full_name = f"{self.first_name} {self.last_name}"
     return full_name.strip()
@@ -59,18 +60,15 @@ class User(AbstractBaseUser):
   def get_short_name(self):
     return f"{self.first_name}"
 
-
-  def __str__(self):
-    return self.email
-
   def has_perm(self, perm, obj=None):
     return True
 
   def has_module_perms(self, app_label):
     return True
 
-
   def email_user(self, subject, message, from_email=None, **kwargs):
     send_mail(subject, message, from_email, [self.email], **kwargs)
 
-
+  @property
+  def is_staff(self):
+    return self.is_admin
