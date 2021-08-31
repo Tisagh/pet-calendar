@@ -13,13 +13,13 @@ User = get_user_model()
 class UserAdmin(BaseUserAdmin):
   form = UserChangeForm
   add_form = UserCreationForm
-  list_display = ('email', 'first_name', 'last_name', 'is_staff', 'is_admin')
+  list_display = ('email', 'first_name', 'last_name', 'is_admin')
   list_filter = ('is_admin',)
   search_fields = ('email', 'first_name', 'last_name',)
   fieldsets = (
     (None, {'fields': ('email', 'password')}),
     ('Profile', {'fields': ('first_name', 'last_name')}),
-    ('Access', {'fields': ('is_active', 'is_staff', 'is_admin')}),
+    ('Access', {'fields': ('is_active', 'is_admin')}),
   )
   add_fieldsets = (
       ('Required Fields', {
@@ -30,7 +30,7 @@ class UserAdmin(BaseUserAdmin):
       ('Access', {
           'description': ("Access level for this user."),
             'classes': ('wide',),
-          'fields': ('is_active', 'is_staff', 'is_admin'),
+          'fields': ('is_active', 'is_admin'),
           }),
       ('Password', {
           'description': ("Optionally enter a password for the user"),

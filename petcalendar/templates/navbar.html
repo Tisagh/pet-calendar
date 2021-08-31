@@ -1,0 +1,9 @@
+<nav>
+  <ul>
+    <li><a>Home</a></li>
+    <li><a>Schedule</a></li>
+    {% if user.is_authenticated %}
+    <li><a>Profile</a></li>
+    {% endif %}
+  </ul>
+</nav>
