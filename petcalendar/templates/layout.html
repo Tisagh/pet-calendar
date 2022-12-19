@@ -20,7 +20,15 @@
         {% include "navbar.html" %}
       </div>
     </div>
+    {% block content_extra_header %}{% endblock content_extra_header %}
   </header>
-  
+  <main>
+    {% block content_main %}{% endblock content_main %}
+
+  </main>
+  <footer>
+    {% block content_extra_footer %}{% endblock content_extra_footer %}
+
+  </footer>
 </body>
 </html>
